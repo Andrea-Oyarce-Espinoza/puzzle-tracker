@@ -1,184 +1,217 @@
-.counter {
-  font-size: 16px;
-  padding: 5px 10px;
-  border-radius: 5px;
-  color: var(--accent);
-  background: var(--accent-bg);
-  border: 2px solid transparent;
-  transition: border-color 0.3s;
-  margin-bottom: 24px;
-
-  &:hover {
-    border-color: var(--accent-border);
-  }
-  &:focus-visible {
-    outline: 2px solid var(--accent);
-    outline-offset: 2px;
-  }
+/* 1. Variables de Diseño (Tu paleta de colores) */
+:root {
+  --bg-principal: #0b0f19;         /* Azul noche ultra oscuro */
+  --bg-panel: #131c2e;             /* Azul grisáceo para los contenedores */
+  --text-principal: #f8fafc;       /* Blanco limpio */
+  --text-secundario: #64748b;      /* Gris azulado para etiquetas */
+  --color-accion: #10b981;         /* Verde esmeralda para el botón Inicial */
+  --color-pausa: #f59e0b;          /* Ámbar/Naranja para pausar */
+  --color-alerta: #ef4444;         /* Rojo para reiniciar/borrar */
+  --color-borde: #1e293b;          /* Separadores sutiles */ 
 }
 
-.hero {
-  position: relative;
-
-  .base,
-  .framework,
-  .vite {
-    inset-inline: 0;
-    margin: 0 auto;
-  }
-
-  .base {
-    width: 170px;
-    position: relative;
-    z-index: 0;
-  }
-
-  .framework,
-  .vite {
-    position: absolute;
-  }
-
-  .framework {
-    z-index: 1;
-    top: 34px;
-    height: 28px;
-    transform: perspective(2000px) rotateZ(300deg) rotateX(44deg) rotateY(39deg)
-      scale(1.4);
-  }
-
-  .vite {
-    z-index: 0;
-    top: 107px;
-    height: 26px;
-    width: auto;
-    transform: perspective(2000px) rotateZ(300deg) rotateX(40deg) rotateY(39deg)
-      scale(0.8);
-  }
+body {
+  margin: 0; 
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  background-color: var(--bg-principal);
+  color: var(--text-principal); 
+  -webkit-font-smoothing: antialiased; 
 }
 
-#center {
+/* 2. Contenedor General */
+.tracker-container {
+  max-width: 1000px;
+  margin: 0 auto; 
+  padding: 40px 20px;
+}
+
+.tracker-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.tracker-header h1 {
+  font-size: 2.2rem; 
+  margin-bottom: 8px; 
+  background: linear-gradient(to right, #34d399, #3b82f6);
+  -webkit-background-clip: text; 
+  -webkit-text-fill-color: transparent; /* Efecto de texto degradado moderno */ 
+}
+
+.tracker-header p {
+  color: var(--text-secundario); 
+  margin: 0; 
+}
+
+/* 3. Distribución en Grilla (Dos columnas balanceadas) */
+.tracker-grid {
+  display: grid; 
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 30px;
+}
+
+/* Estilo base para ambos paneles */
+.control-panel, .history-panel {
+  background-color: var(--bg-panel);
+  border-radius: 16px;
+  padding: 30px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+  border: 1px solid var(--color-borde);
+}
+
+/* 4. Panel de Control (Izquierdo) */
+.input-group {
+  display: flex; 
+  flex-direction: column;
+  gap: 10px; 
+  margin-bottom: 30px;
+}
+
+.input-group label {
+  color: var(--text-secundario);
+  font-size: 0.9rem; 
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.input-group select {
+  background-color: var(--bg-principal);
+  color: var(--text-principal);
+  border: 1px solid var(--color-borde); 
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  outline: none;
+}
+
+/* El Cronómetro Visual */
+.timer-display {
+  text-align: center;
+  background-color: var(--bg-principal);
+  padding: 25px;
+  border-radius: 12px;
+  margin-bottom: 30px;
+  border: 1px dashed var(--text-secundario);
+}
+
+.timer-display h2 {
+  font-family: 'Courier New', Courier, monospace; /* Tipografía digital */
+  font-size: 3.5rem;
+  margin: 0;
+  font-weight: bold;
+  letter-spacing: 2px;
+  color: #38bdf8; /* Celeste neón */
+}
+
+/* Botonera */
+.button-group {
   display: flex;
   flex-direction: column;
-  gap: 25px;
-  place-content: center;
-  place-items: center;
-  flex-grow: 1;
-
-  @media (max-width: 1024px) {
-    padding: 32px 20px 24px;
-    gap: 18px;
-  }
+  gap: 12px;
 }
 
-#next-steps {
+.btn {
+  width: 100%; 
+  padding: 14px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn:disabled {
+  opacity:  0.3;
+  cursor: not-allowed;
+}
+
+.btn-start { background-color: var(--color-accion); color: #fff; }
+.btn-start:hover:not(:disabled) { background-color: #059669; }
+
+.btn-pause { background-color: var(--color-accion); color: #fff; }
+.btn-pause:hover:not(:disabled) { background-color: #2563eb; }
+
+.btn-save { background-color: #3b85f6; color: #fff; }
+.btn-save:hover:not(:disabled) { background-color: #2563eb; }
+
+.btn-reset { background-color: transparent; color: var(--text-secundario); border: 1px solid var(--color-borde); }
+.btn-reset:hover:not(:disabled) { color: var(--color-alerta); border-color: var(--color-alerta); }
+
+/* 5. Panel de Historial (Derecho) */ 
+.history-header {
   display: flex;
-  border-top: 1px solid var(--border);
-  text-align: left;
-
-  & > div {
-    flex: 1 1 0;
-    padding: 32px;
-    @media (max-width: 1024px) {
-      padding: 24px 20px;
-    }
-  }
-
-  .icon {
-    margin-bottom: 16px;
-    width: 22px;
-    height: 22px;
-  }
-
-  @media (max-width: 1024px) {
-    flex-direction: column;
-    text-align: center;
-  }
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  border-bottom: 1px solid var(--color-borde);
+  padding-bottom: 15px;
 }
 
-#docs {
-  border-right: 1px solid var(--border);
-
-  @media (max-width: 1024px) {
-    border-right: none;
-    border-bottom: 1px solid var(--border);
-  }
+.history-header h2 {
+  color: var(--text-secundario);
+  font-size: 1.3rem;
+  margin: 0;
 }
 
-#next-steps ul {
-  list-style: none;
-  padding: 0;
+.btn-clear {
+  background: none;
+  border: none; 
+  color: var(--color-alerta);
+  cursor: pointer; 
+  font-size: 0.9rem;
+}
+
+.btn-clear:hover {
+  text-decoration: underline;
+}
+
+.empty-message {
+  color: var(--text-secundario);
+  text-align: center;
+  margin-top: 40px; 
+  font-style: italic;
+}
+
+/* Tarjetas de registros individuales */
+.records-list {
   display: flex;
-  gap: 8px;
-  margin: 32px 0 0;
-
-  .logo {
-    height: 18px;
-  }
-
-  a {
-    color: var(--text-h);
-    font-size: 16px;
-    border-radius: 6px;
-    background: var(--social-bg);
-    display: flex;
-    padding: 6px 12px;
-    align-items: center;
-    gap: 8px;
-    text-decoration: none;
-    transition: box-shadow 0.3s;
-
-    &:hover {
-      box-shadow: var(--shadow);
-    }
-    .button-icon {
-      height: 18px;
-      width: 18px;
-    }
-  }
-
-  @media (max-width: 1024px) {
-    margin-top: 20px;
-    flex-wrap: wrap;
-    justify-content: center;
-
-    li {
-      flex: 1 1 calc(50% - 8px);
-    }
-
-    a {
-      width: 100%;
-      justify-content: center;
-      box-sizing: border-box;
-    }
-  }
+  flex-direction: column;
+  gap: 12px;
+  max-height: 300px;
+  overflow-y: auto; /* Permite scroll si hay muchos registros */
+  padding-right: 5px;
 }
 
-#spacer {
-  height: 88px;
-  border-top: 1px solid var(--border);
-  @media (max-width: 1024px) {
-    height: 48px;
-  }
+.record-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--bg-principal);
+  padding: 15px;
+  border-radius: 8px;
+  border-left: 4px solid #3b82f6;
 }
 
-.ticks {
-  position: relative;
-  width: 100%;
+.record-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
 
-  &::before,
-  &::after {
-    content: '';
-    position: absolute;
-    top: -4.5px;
-    border: 5px solid transparent;
-  }
+.record-badge {
+  font-size: 0.9rem; 
+  font-weight: 600;
+}
 
-  &::before {
-    left: 0;
-    border-left-color: var(--border);
-  }
-  &::after {
-    right: 0;
-    border-right-color: var(--border);
-  }
+.record-info small {
+  color: var(--text-secundario);
+}
+
+.record-time {
+  font-family: monospace;
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #34d399;
 }
